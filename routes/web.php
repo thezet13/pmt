@@ -231,4 +231,16 @@ Route::get('/slide-13-donut', function (Slide13DonutSvg $chart) {
         ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
 });
 
+
+Route::get('/debug-build', function () {
+    return response()->json([
+        'public_path' => public_path(),
+        'manifest_exists' => file_exists(public_path('build/manifest.json')),
+        'manifest_path' => public_path('build/manifest.json'),
+        'build_files' => is_dir(public_path('build'))
+            ? scandir(public_path('build'))
+            : 'build dir not found',
+    ]);
+});
+
 require __DIR__ . '/auth.php';
