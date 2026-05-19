@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+input.ui-num[type="number"] {
+  padding-right: 0.5rem;
+  -moz-appearance: textfield;
+  outline: none;
+  box-shadow: none;
+}
+
+input.ui-num[type="number"]::-webkit-inner-spin-button,
+input.ui-num[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+input.ui-num[type="number"]{
+  forced-color-adjust: none;
+}
+
+input.ui-num:hover,
+input.ui-num:focus,
+input.ui-num:focus-visible,
+input.ui-num:active {
+  outline: none;
+  box-shadow: none;
+}
