@@ -31,9 +31,4 @@ RUN npm run build
 ENV APP_ENV=production
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-CMD php artisan optimize:clear \
-    && php artisan migrate --force \
-    && php artisan storage:link || true \
-    && mkdir -p storage/app/pptx/tmp storage/app/pptx/exports storage/app/charts storage/app/private/charts \
-    && chmod -R 777 storage bootstrap/cache \
-    && php artisan serve --host=0.0.0.0 --port=${PORT}
+CMD sh -c "php artisan optimize:clear && php artisan migrate --force && php artisan storage:link || true; mkdir -p storage/app/pptx/tmp storage/app/pptx/exports storage/app/charts storage/app/private/charts; chmod -R 777 storage bootstrap/cache; php artisan serve --host=0.0.0.0 --port=${PORT}"
