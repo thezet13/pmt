@@ -232,14 +232,12 @@ Route::get('/slide-13-donut', function (Slide13DonutSvg $chart) {
 });
 
 
-Route::get('/debug-build', function () {
+Route::get('/debug-php', function () {
     return response()->json([
-        'public_path' => public_path(),
-        'manifest_exists' => file_exists(public_path('build/manifest.json')),
-        'manifest_path' => public_path('build/manifest.json'),
-        'build_files' => is_dir(public_path('build'))
-            ? scandir(public_path('build'))
-            : 'build dir not found',
+        'php' => PHP_VERSION,
+        'zip_loaded' => extension_loaded('zip'),
+        'ziparchive_exists' => class_exists(\ZipArchive::class),
+        'loaded_extensions' => get_loaded_extensions(),
     ]);
 });
 
