@@ -28,8 +28,8 @@ html, body {
     margin: 0;
     padding: 0;
     background: transparent;
-    width: '.$width.'px;
-    height: '.$height.'px;
+    width: ' . $width . 'px;
+    height: ' . $height . 'px;
     overflow: hidden;
 }
 svg {
@@ -43,6 +43,8 @@ svg {
 </html>';
 
         Browsershot::html($html)
+            ->setChromePath('/usr/bin/chromium')
+            ->noSandbox()
             ->windowSize($width, $height)
             ->deviceScaleFactor(2)
             ->setOption('omitBackground', true)

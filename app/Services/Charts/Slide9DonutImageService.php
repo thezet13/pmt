@@ -116,6 +116,8 @@ svg {
 </html>';
 
         Browsershot::html($html)
+            ->setChromePath('/usr/bin/chromium')
+            ->noSandbox()
             ->windowSize($width, $height)
             ->deviceScaleFactor(2)
             ->setOption('omitBackground', true)
