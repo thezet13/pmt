@@ -3,10 +3,9 @@ FROM php:8.2-cli-bookworm
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl \
+    git unzip zip curl ca-certificates gnupg \
     libzip-dev \
     default-mysql-client \
-    nodejs npm \
     chromium \
     fontconfig \
     libnss3 \
@@ -14,7 +13,11 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     libxss1 \
     libasound2 \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo_mysql zip \
+    && node -v \
+    && npm -v \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
