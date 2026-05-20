@@ -46,7 +46,15 @@
                                 @endif
                             </td>
                             <td class="py-2">
-                                <div class="flex gap-2">
+                                <div class="flex gap-2 w-full justify-between">
+
+                                <form method="POST" action="{{ route('admin.months.export', $month) }}">
+                                        @csrf
+                                        <button class="px-3 py-1 bg-green-600 text-white rounded">
+                                            Export
+                                        </button>
+                                    </form>
+
                                     @if(!$month->is_active)
                                     <form method="POST" action="{{ route('admin.months.activate', $month) }}">
                                         @csrf
@@ -56,12 +64,7 @@
                                     </form>
                                     @endif
 
-                                    <form method="POST" action="{{ route('admin.months.export', $month) }}">
-                                        @csrf
-                                        <button class="px-3 py-1 bg-green-600 text-white rounded">
-                                            Export
-                                        </button>
-                                    </form>
+
                                 </div>
                             </td>
                         </tr>
