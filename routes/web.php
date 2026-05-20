@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\PresentationMonthController;
 use App\Http\Controllers\Admin\SlideController;
@@ -21,7 +22,9 @@ use App\Services\Charts\Slide13DonutSvg;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return Auth::check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -229,16 +232,6 @@ Route::get('/slide-13-donut', function (Slide13DonutSvg $chart) {
     return response($svg, 200)
         ->header('Content-Type', 'image/svg+xml')
         ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
-});
-
-
-Route::get('/debug-php', function () {
-    return response()->json([
-        'php' => PHP_VERSION,
-        'zip_loaded' => extension_loaded('zip'),
-        'ziparchive_exists' => class_exists(\ZipArchive::class),
-        'loaded_extensions' => get_loaded_extensions(),
-    ]);
 });
 
 require __DIR__ . '/auth.php';
