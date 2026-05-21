@@ -42,7 +42,11 @@ class SlideEditorController extends Controller
         ]);
 
         $values = $slideValue->values_json ?? [];
-        $values = array_merge($this->getDefaultsForSlide((int) $slide->slide_number), $values);
+
+        $values = array_replace_recursive(
+            $this->getDefaultsForSlide((int) $slide->slide_number),
+            $values
+        );
 
         return view('slides.edit', compact(
             'slide',
@@ -287,12 +291,12 @@ class SlideEditorController extends Controller
     private function getSlide10Defaults(): array
     {
         return [
-            'title' => '',
-            'subtitle' => '',
-            'number_1' => '',
-            'number_2' => '',
-            'number_3' => '',
-            'donut_block' => [],
+            'title' => '11',
+            'subtitle' => '11',
+            'number_1' => '33',
+            'number_2' => '44',
+            'number_3' => '55',
+            //'donut_block' => [],
         ];
     }
 
