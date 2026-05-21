@@ -75,12 +75,14 @@ class Slide8DiagramImageService
 
         file_put_contents($svgPath, $svg);
 
-        Browsershot::html($svg)
-            ->setChromePath('/usr/bin/chromium')
+        $browsershot = Browsershot::html($svg)
             ->noSandbox()
             ->windowSize((int)($data['width'] ?? 900), (int)($data['height'] ?? 330))
-            ->transparentBackground()
-            ->save($pngPath);
+            ->transparentBackground();
+        if (PHP_OS_FAMILY !== 'Windows') {
+            $browsershot->setChromePath('/usr/bin/chromium');
+        }
+        $browsershot->save($pngPath);
 
         return $pngPath;
     }

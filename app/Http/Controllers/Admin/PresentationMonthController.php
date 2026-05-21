@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\PresentationMonth;
 use App\Models\Slide;
 use App\Models\SlideStatus;
+use App\Models\SlideValue;
+
 use Illuminate\Http\Request;
 
 class PresentationMonthController extends Controller
@@ -39,6 +41,11 @@ class PresentationMonthController extends Controller
             'is_active' => false,
         ]);
 
+        $previousMonth = PresentationMonth::where('id', '!=', $presentationMonth->id)
+            ->orderByDesc('year')
+            ->orderByDesc('month')
+            ->first();
+
         $slides = Slide::where('is_active', true)->get();
 
         foreach ($slides as $slide) {
@@ -48,6 +55,21 @@ class PresentationMonthController extends Controller
             ], [
                 'status' => 'in_progress',
             ]);
+
+            if ($previousMonth) {
+                $previousValue = SlideValue::where('presentation_month_id', $previousMonth->id)
+                    ->where('slide_id', $slide->id)
+                    ->first();
+
+                if ($previousValue) {
+                    SlideValue::firstOrCreate([
+                        'presentation_month_id' => $presentationMonth->id,
+                        'slide_id' => $slide->id,
+                    ], [
+                        'values_json' => $previousValue->values_json,
+                    ]);
+                }
+            }
         }
 
         return redirect()

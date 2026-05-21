@@ -42,14 +42,17 @@ svg {
 </body>
 </html>';
 
-        Browsershot::html($html)
-            ->setChromePath('/usr/bin/chromium')
+        $browsershot = Browsershot::html($html)
             ->noSandbox()
             ->windowSize($width, $height)
             ->deviceScaleFactor(2)
             ->setOption('omitBackground', true)
-            ->transparentBackground()
-            ->save($fullPngPath);
+            ->transparentBackground();
+
+        if (PHP_OS_FAMILY !== 'Windows') {
+            $browsershot->setChromePath('/usr/bin/chromium');
+        }
+        $browsershot->save($fullPngPath);
 
         return $fullPngPath;
     }

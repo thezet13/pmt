@@ -61,7 +61,10 @@ class SlideEditorController extends Controller
     {
         $user = $request->user();
 
-        if (!$user->isAdmin() && !$user->allowedSlides()->where('slides.id', $slide->id)->exists()) {
+        if (
+            !$user->isAdmin()
+            && !$user->allowedSlides()->where('slides.id', $slide->id)->exists()
+        ) {
             abort(403);
         }
 
@@ -69,34 +72,6 @@ class SlideEditorController extends Controller
 
         $data = $request->validate([
             'status' => ['required', 'in:in_progress,completed'],
-
-            'title' => ['nullable', 'string', 'max:255'],
-            'subtitle' => ['nullable', 'string'],
-
-            'total_requests' => ['nullable', 'string', 'max:255'],
-            'period' => ['nullable', 'string', 'max:255'],
-
-            'number_1' => ['nullable', 'string', 'max:255'],
-            'number_2' => ['nullable', 'string', 'max:255'],
-            'number_3' => ['nullable', 'string', 'max:255'],
-            'number_4' => ['nullable', 'string', 'max:255'],
-            'number_5' => ['nullable', 'string', 'max:255'],
-
-            'year_requests' => ['nullable', 'string', 'max:255'],
-            'cum_requests' => ['nullable', 'string', 'max:255'],
-
-            'baku' => ['nullable', 'string', 'max:255'],
-            'regions' => ['nullable', 'string', 'max:255'],
-
-            'avg_dailyreqs' => ['nullable', 'string', 'max:255'],
-            'sat_year' => ['nullable', 'string', 'max:255'],
-            'sat_total' => ['nullable', 'string', 'max:255'],
-
-            'waiting_time' => ['nullable', 'string', 'max:255'],
-            'service_time' => ['nullable', 'string', 'max:255'],
-
-            'donut_block' => ['nullable', 'array'],
-            'donut_colors' => ['nullable', 'array'],
         ]);
 
         $slideNumber = (int) $slide->slide_number;
@@ -107,6 +82,7 @@ class SlideEditorController extends Controller
             9 => $this->extractSlide9Values($request),
             10 => $this->extractSlide10Values($request),
             13 => $this->extractSlide13Values($request),
+
             default => $this->extractSimpleSlideValues($request),
         };
 
@@ -158,38 +134,9 @@ class SlideEditorController extends Controller
 
             'subtitle' => 'xərclər smetası və icrası ilə bağlı vəziyyət',
 
-            'text_blocks' => [
-                '',
-                '',
-                '',
-                '',
-            ],
+            'text_blocks' => [],
 
-            'budget_rows' => [
-                [
-                    'label' => 'Əməyin ödənişi',
-                    'smeta_amount' => '79 682 370,06',
-                    'fact_amount' => '79 682 370,06',
-                ],
-
-                [
-                    'label' => 'Malların (iş və xidmətlərin) satınalınması',
-                    'smeta_amount' => '12 397 132,17',
-                    'fact_amount' => '12 397 132,17',
-                ],
-
-                [
-                    'label' => 'Sosial ödənişlər',
-                    'smeta_amount' => '365 062,98',
-                    'fact_amount' => '365 062,98',
-                ],
-
-                [
-                    'label' => 'Qeyri-maliyyə aktivləri (tikinti, əsaslı təmir, qeyri-maliyyə aktivlər və s.)',
-                    'smeta_amount' => '44 564 709,25',
-                    'fact_amount' => '44 564 709,25',
-                ],
-            ],
+            'budget_rows' => [],
 
             'note' => 'Agentlik, “DOST” mərkəzləri və Agentliyin təsis etdiyi təsərrüfat cəmiyyətləri üzrə',
         ];
@@ -224,32 +171,7 @@ class SlideEditorController extends Controller
 
                 'color' => '#0076B6',
 
-                'bars' => [
-                    [
-                        'label' => 'DOST Modelinin transformasiyası',
-                        'value' => 100,
-                    ],
-                    [
-                        'label' => 'Xidmətlərin universallığının təmin edilməsi',
-                        'value' => 94,
-                    ],
-                    [
-                        'label' => 'İnnovativ yanaşmaların və texnoloji həllərin tətbiqi',
-                        'value' => 90,
-                    ],
-                    [
-                        'label' => 'DOST Agentliyinin beynəlxalq əlaqələrinin inkişafı, tanınma və təcrübə mübadiləsi',
-                        'value' => 100,
-                    ],
-                    [
-                        'label' => 'DOST Agentliyinin lokal təşkilatlar ilə əməkdaşlıq əlaqələrinin genişləndirilməsi',
-                        'value' => 100,
-                    ],
-                    [
-                        'label' => 'DOST modelinin dayanıqlılığının təmin olunması',
-                        'value' => 97,
-                    ],
-                ]
+                'bars' => []
             ],
         ];
     }
@@ -291,12 +213,20 @@ class SlideEditorController extends Controller
     private function getSlide10Defaults(): array
     {
         return [
-            'title' => '11',
-            'subtitle' => '11',
-            'number_1' => '33',
-            'number_2' => '44',
-            'number_3' => '55',
-            //'donut_block' => [],
+            'title' => '',
+            'subtitle' => '',
+            'number_1' => '',
+            'number_2' => '',
+            'number_3' => '',
+
+            'donut_block' => [
+                'width' => 1080,
+                'height' => 275,
+
+                'legend' => [],
+
+                'charts' => [],
+            ],
         ];
     }
 
@@ -336,16 +266,8 @@ class SlideEditorController extends Controller
             'donut_cert' => [
                 'width' => 410,
                 'height' => 470,
-                'legend' => [
-                    ['label' => 'Psixologiya', 'color' => '#8E63D9'],
-                    ['label' => 'Microsoft office üzrə', 'color' => '#0F68B7'],
-                    ['label' => 'Xarici dil bilikləri üzrə', 'color' => '#65C8C3'],
-                    ['label' => 'Audit', 'color' => '#9BAFDF'],
-                    ['label' => 'İnsan resurslarının idarə edilməsi üzrə', 'color' => '#A8E66B'],
-                    ['label' => 'Maliyyə və mühasibatlıq üzrə', 'color' => '#2098E8'],
-                    ['label' => 'Layihələrin idarə edilməsi üzrə (PMP)', 'color' => '#CFE6FA'],
-                ],
-                'values' => [1, 20, 6, 1, 6, 6, 4],
+                'legend' => [],
+                'values' => [],
             ],
         ];
     }
@@ -477,9 +399,7 @@ class SlideEditorController extends Controller
             'number_3' => $request->input('number_3', ''),
         ];
 
-        if ($request->has('donut_block')) {
-            $values['donut_block'] = $request->input('donut_block');
-        }
+        $values['donut_block'] = $request->input('donut_block', []);
 
         return $values;
     }
