@@ -82,7 +82,8 @@ class SlideEditorController extends Controller
             9 => $this->extractSlide9Values($request),
             10 => $this->extractSlide10Values($request),
             13 => $this->extractSlide13Values($request),
-
+            14 => $this->extractSlide14Values($request),
+            15 => $this->extractSlide15Values($request),
             default => $this->extractSimpleSlideValues($request),
         };
 
@@ -123,6 +124,8 @@ class SlideEditorController extends Controller
             9 => $this->getSlide9Defaults(),
             10 => $this->getSlide10Defaults(),
             13 => $this->getSlide13Defaults(),
+            14 => $this->getSlide14Defaults(),
+            15 => $this->getSlide15Defaults(),
             default => [],
         };
     }
@@ -273,7 +276,59 @@ class SlideEditorController extends Controller
     }
 
 
+    private function getSlide14Defaults(): array
+    {
+        return [
+            'title' => 'İnsan resurslarının idarə olunması:',
+            'subtitle' => 'mövcud vəziyyətə dair icmal',
 
+            'text1' => 'Heyətin cəlbi və işə qəbul üzrə:',
+            'subtext1' => 'DOST Agentliyində iş yerlərinin təhlilinə (job analysis) aparılmaması, heyətin optimallaşdırılmasına ehtiyacın olması;',
+
+            'text2' => 'Fəaliyyətin qiymətləndirilməsi:',
+            'subtext2' => 'İşçilərin xidməti fəaliyyətinin qiymətləndirilməsi prosesinin effektiv tətbiqi ilə bağlı avtomatlaşdırılmış idarəetmə sisteminin olmaması.',
+
+            'text3' => 'Heyətin inkişafı və motivasiyası üzrə:',
+            'subtext3' => 'DOST Agentliyinin işçilərinin peşəkar inkişafının təmin edilməsi ilə bağlı təsdiq edilmiş təlim büdcəsinin istifadəsi üzrə məhdudiyyətlər;',
+
+            'text4' => 'Könüllü fəaliyyəti:',
+            'subtext4' => 'DOST Agentliyində əmək haqqı sisteminin çevik olmaması (vəzifələr arasında əmək haqqı diapazonunun dar olması, stimullaşdırıcı alətlərin və əmək haqqına əlavələrin olmaması, vəzifə strukturuna baxılmasına ehtiyacın olması).',
+
+            'es' => 'Ərizə sayı',
+            'es_r' => '140 000',
+
+            'fm' => 'Fəaliyyət müddəti',
+            'fm_r' => '6 il',
+
+            'kp' => 'Könüllü proqramına cəlb olunub',
+            'kp_r' => '6 110',
+
+            'id' => 'İşə düzəlmə',
+            'id_r' => '305',
+        ];
+    }
+
+
+    private function getSlide15Defaults(): array
+    {
+        return [
+            'title' => '',
+            'subtitle' => '',
+
+            'text1h' => '',
+            'text1' => '',
+            'text2h' => '',
+            'text2' => '',
+            'text3h' => '',
+            'text3' => '',
+            'text4h' => '',
+            'text4' => '',
+            'text5h' => '',
+            'text5' => '',
+            'text6h' => '',
+            'text6' => '',
+        ];
+    }
 
 
 
@@ -448,6 +503,66 @@ class SlideEditorController extends Controller
         $values['donut_cert'] = $request->input('donut_cert', []);
 
         return $values;
+    }
+
+
+    private function extractSlide14Values(Request $request): array
+    {
+        return [
+            'title' => $request->input('title', ''),
+            'subtitle' => $request->input('subtitle', ''),
+
+            'text1' => $request->input('text1', ''),
+            'subtext1' => $request->input('subtext1', ''),
+
+            'text2' => $request->input('text2', ''),
+            'subtext2' => $request->input('subtext2', ''),
+
+            'text3' => $request->input('text3', ''),
+            'subtext3' => $request->input('subtext3', ''),
+
+            'text4' => $request->input('text4', ''),
+            'subtext4' => $request->input('subtext4', ''),
+
+            'es' => $request->input('es', ''),
+            'es_r' => $request->input('es_r', ''),
+
+            'fm' => $request->input('fm', ''),
+            'fm_r' => $request->input('fm_r', ''),
+
+            'kp' => $request->input('kp', ''),
+            'kp_r' => $request->input('kp_r', ''),
+
+            'id' => $request->input('id', ''),
+            'id_r' => $request->input('id_r', ''),
+        ];
+    }
+
+
+    private function extractSlide15Values(Request $request): array
+    {
+        return [
+            'title' => $request->input('title'),
+            'subtitle' => $request->input('subtitle'),
+
+            'text1h' => $request->input('text1h'),
+            'text1' => $request->input('text1'),
+
+            'text2h' => $request->input('text2h'),
+            'text2' => $request->input('text2'),
+
+            'text3h' => $request->input('text3h'),
+            'text3' => $request->input('text3'),
+
+            'text4h' => $request->input('text4h'),
+            'text4' => $request->input('text4'),
+
+            'text5h' => $request->input('text5h'),
+            'text5' => $request->input('text5'),
+
+            'text6h' => $request->input('text6h'),
+            'text6' => $request->input('text6'),
+        ];
     }
 
 

@@ -127,10 +127,11 @@ class PptxExporter
         int $slideXmlNumber
     ): void {
         $renderers = [
-            8 => \App\Services\Pptx\Slides\Slide8Renderer::class,
+                8 => \App\Services\Pptx\Slides\Slide8Renderer::class,
             9 => \App\Services\Pptx\Slides\Slide9Renderer::class,
             10 => \App\Services\Pptx\Slides\Slide10Renderer::class,
             13 => \App\Services\Pptx\Slides\Slide13Renderer::class,
+            15 => \App\Services\Pptx\Slides\Slide15Renderer::class,
         ];
 
         if (!isset($renderers[$slideNumber])) {
